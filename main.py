@@ -185,8 +185,47 @@ def eliminarPartido(id):
     json = response.json()
     return jsonify(json)
 
-#----------------------------------------------------------------------------------------------------------------#
+#------------------------------------------    RESULTADOS   -------------------------------------------------------#
 
+@app.route("/resultados",methods=['GET'])
+def getResultados():
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/resultados'
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+@app.route("/resultados/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['POST'])
+def crearResultado(id_candidato, id_mesa):
+    data = request.get_json()
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/resultados/candidato/'+ id_candidato +'/mesa/'+id_mesa
+    response = requests.post(url, headers=headers,json=data)
+    json = response.json()
+    return jsonify(json)
+@app.route("/resultados/<string:id>",methods=['GET'])
+def getResultado(id):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/resultado/'+id
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+@app.route("/resultados/<string:id_resultado>/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['PUT'])
+def modificarResultado(id_resultado,id_candidato,id_mesa):
+    data = request.get_json()
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/resultados/'+id_resultado+'/candidato/'+id_candidato+'/mesa/'+id_mesa
+    response = requests.put(url, headers=headers, json=data)
+    json = response.json()
+    return jsonify(json)
+@app.route("/resultados/<string:id>",methods=['DELETE'])
+def eliminarResultado(id):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/resultado/' + id
+    response = requests.delete(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
+#----------------------------------------------------------------------------------------------------------------#
 
 @app.route("/",methods=['GET'])
 def test():
