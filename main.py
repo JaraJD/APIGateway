@@ -105,6 +105,14 @@ def eliminarCandidato(id):
     json = response.json()
     return jsonify(json)
 
+@app.route("/candidatos/<string:id>/partido/<string:id_partido>",methods=['PUT'])
+def asignarPartido(id,id_partido):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-academic"] + '/candidatos/'+id+'/partido/'+id_partido
+    response = requests.put(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
 #------------------------------------------     MESAS    -------------------------------------------------------#
 
 @app.route("/mesas",methods=['GET'])
